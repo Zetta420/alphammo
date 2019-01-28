@@ -26,6 +26,7 @@ if(isset($_GET['method']) && (!empty($_GET['method']))){
                             $return = array("type" => "error", "message" => passwordInvalidMessage);
                             echo json_encode($return);
                             break;
+                            
                     }
 
 
