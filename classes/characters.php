@@ -11,7 +11,7 @@ class characters extends users
     public function getCharactersIdUser($user)
     {
 
-        if (users::usernameExists(functions::db(), $user)) {
+        if (users::usernameExists($user)) {
 
             $userId = users::getIdUsr($user);
             $sql = "SELECT id FROM " . charactersDataTable . " WHERE userId=" . $userId;
