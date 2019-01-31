@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Système de connexion via API en PHP pour UnrealEngine
+ * Développé par Zetta420
+ * Nécessitant l'asset "VaRest" pour le blueprint
+ */
 
 class characters extends users
 {
@@ -7,14 +11,14 @@ class characters extends users
     public function getCharactersIdUser($user)
     {
 
-        if (users::usernameExists($user)) {
+        if (users::usernameExists(functions::db(), $user)) {
 
             $userId = users::getIdUsr($user);
             $sql = "SELECT id FROM " . charactersDataTable . " WHERE userId=" . $userId;
 
             if ($req = functions::db()->query($sql)) {
                 while ($rep = $req->fetch()) {
-                    return array("id" => $rep["id"]);
+                    return $rep["id"];
                 }
             }
             return "ER2";
@@ -41,8 +45,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT userId FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($userId = functions::db()->query($sql)->fetch()){
-                return $userId;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['userId'];
             }
 
             return "ER2";
@@ -57,8 +61,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT name FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($name = functions::db()->query($sql)->fetch()){
-                return $name;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['name'];
             }
 
             return "ER2";
@@ -73,8 +77,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT raceId FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($raceId = functions::db()->query($sql)->fetch()){
-                return $raceId;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['raceId'];
             }
 
             return "ER2";
@@ -89,8 +93,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT classId FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($classId = functions::db()->query($sql)->fetch()){
-                return $classId;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['classId'];
             }
 
             return "ER2";
@@ -105,8 +109,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT level FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($level = functions::db()->query($sql)->fetch()){
-                return $level;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['level'];
             }
 
             return "ER2";
@@ -121,8 +125,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT exp FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($exp = functions::db()->query($sql)->fetch()){
-                return $exp;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['exp'];
             }
 
             return "ER2";
@@ -137,8 +141,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT needExp FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($needExp = functions::db()->query($sql)->fetch()){
-                return $needExp;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['needExp'];
             }
 
             return "ER2";
@@ -153,8 +157,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT maxHp FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($maxHp = functions::db()->query($sql)->fetch()){
-                return $maxHp;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['maxHp'];
             }
 
             return "ER2";
@@ -169,8 +173,8 @@ class characters extends users
         if($this->characterExists($characterId)){
 
             $sql = "SELECT maxStrenght FROM ".charactersDataTable." WHERE id=".$characterId;
-            if($maxStrenght = functions::db()->query($sql)->fetch()){
-                return $maxStrenght;
+            if($rep = functions::db()->query($sql)->fetch()){
+                return $rep['maxStrenght'];
             }
 
             return "ER2";

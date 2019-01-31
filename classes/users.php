@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Système de connexion via API en PHP pour UnrealEngine
+ * Développé par Zetta420
+ * Nécessitant l'asset "VaRest" pour le blueprint
+ */
 class users extends functions
 {
 
@@ -10,6 +14,7 @@ class users extends functions
         $sql = "SELECT id FROM ".userDataTable." WHERE id=".$id;
         if(functions::db()->query($sql)){
             return true;
+
         }
 
         return false;
@@ -18,8 +23,8 @@ class users extends functions
     // Fonction pour check si le nom d'utilisateur $user est inscris dans la BDD
     public function usernameExists($user){
 
-        $sql = "SELECT username FROM ".userDataTable." WHERE username=".$user;
-        if(functions::db()->query($sql)){
+        $sql = "SELECT username FROM ".userDataTable." WHERE username='".$user."'";
+        if(functions::db()->query($sql)->fetch()['username'] == $user){
             return true;
         }
 
@@ -30,8 +35,8 @@ class users extends functions
     // Fonction pour check si l'email $email est inscrite dans la BDD
     public function emailExists($mail){
 
-        $sql = "SELECT username FROM ".userDataTable." WHERE email=".$mail;
-        if(functions::db()->query($sql)){
+        $sql = "SELECT email FROM ".userDataTable." WHERE email='".$mail."'";
+        if(functions::db()->query($sql)->fetch()['email']){
             return true;
         }
 
@@ -42,10 +47,9 @@ class users extends functions
     //Récupérer l'id du joueur avec son pseudo
     public function getIdUsr($user){
 
-        $sql = "SELECT id FROM ".userDataTable." WHERE username=".$user;
-        if($req = functions::db()->query($sql)){
-            $id = $req->fetch();
-            return $id;
+        $sql = "SELECT id FROM ".userDataTable." WHERE username='".$user."'";
+        if($id = functions::db()->query($sql)->fetch()){
+            return $id['id'];
         }
 
         return false;
@@ -54,9 +58,9 @@ class users extends functions
     //Récupérer l'id du joueur avec son mail
     public function getIdMail($mail){
 
-        $sql = "SELECT id FROM ".userDataTable." WHERE email=".$mail;
+        $sql = "SELECT id FROM ".userDataTable." WHERE email='".$mail."'";
         if($id = functions::db()->query($sql)->fetch()){
-            return $id;
+            return $id['id'];
         }
 
         return false;
@@ -66,8 +70,8 @@ class users extends functions
     public function getEmailID($id){
 
         $sql = "SELECT email FROM ".userDataTable." WHERE id=".$id;
-        if($mail = functions::db()->query($sql)->fetch()){
-            return $mail;
+        if($rep = functions::db()->query($sql)->fetch()){
+            return $rep['email'];
         }
 
         return false;
@@ -77,8 +81,8 @@ class users extends functions
     public function getUsernameID($id){
 
         $sql = "SELECT username FROM ".userDataTable." WHERE id=".$id;
-        if($username = functions::db()->query($sql)->fetch()){
-            return $username;
+        if($rep = functions::db()->query($sql)->fetch()){
+            return $rep['username'];
         }
 
         return false;
@@ -88,8 +92,8 @@ class users extends functions
     public function getPasswordID($id){
 
         $sql = "SELECT password FROM ".userDataTable." WHERE id=".$id;
-        if($password = functions::db()->query($sql)->fetch()){
-            return $password;
+        if($rep = functions::db()->query($sql)->fetch()){
+            return $rep['password'];
         }
 
         return false;
@@ -98,6 +102,16 @@ class users extends functions
     public function encryptPass($pass){
 
             return password_hash($pass, PASSWORD_ARGON2I);
+
+    }
+
+    public function isBanned($id){
+
+        $sql = "SELECT isBanned FROM ".userDataTable." WHERE id=".$id;
+        if(functions::db()->query($sql)->fetch()['isBanned'] == true) {
+            return true;
+        }
+        return false;
 
     }
 
